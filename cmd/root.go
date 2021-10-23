@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/dhanushsr/clockin/clockin"
+	"github.com/dhanushsr/clockin/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +17,21 @@ func RootCommand(c *clockin.Config) *cobra.Command {
 	}
 
 	root.AddCommand(ConfigCommand(c))
-	root.AddCommand(AddCommand())
+	root.AddCommand(AddCommand(c))
+	root.AddCommand(PrintCommand(c))
 	return root
+}
+
+func PrintCommand(c *clockin.Config) *cobra.Command {
+	var print = &cobra.Command{
+		Use:   "show",
+		Short: "Print data stored.",
+		Run: func(cmd *cobra.Command, args []string) {
+			err := clockin.PrintAllProjects(c)
+			if err != nil {
+				utils.PrintError(err)
+			}
+		},
+	}
+	return print
 }

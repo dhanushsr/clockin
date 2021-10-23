@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/dhanushsr/clockin/clockin"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +13,7 @@ var moduleName string
 const PROJECT_KEY string = "project"
 const MODULE_KEY string = "module"
 
-func AddCommand() *cobra.Command {
+func AddCommand(c *clockin.Config) *cobra.Command {
 	var add = &cobra.Command{
 		Use:   "add",
 		Short: "Add a new project/sub-project to track.",
@@ -21,11 +22,7 @@ func AddCommand() *cobra.Command {
 				fmt.Printf("Invalid Usage.\n\n")
 				_ = cmd.Help()
 			} else {
-				if len(moduleName) == 0 {
-					fmt.Printf("project %s added.\n", projectName)
-				} else {
-					fmt.Printf("Module %s@%s added.\n", moduleName, projectName)
-				}
+				clockin.AddProject(c, projectName, moduleName)
 			}
 		},
 	}

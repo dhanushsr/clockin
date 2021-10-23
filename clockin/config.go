@@ -61,7 +61,7 @@ func (c *Config) Save() error {
 	if err != nil {
 		return err
 	}
-	os.WriteFile(path.Join(baseDir, ConfigFileName), marshalledConfig, 0644)
+	os.WriteFile(path.Join(baseDir, ConfigFileName), marshalledConfig, DEFAULT_FILE_MODE)
 	return nil
 }
 
